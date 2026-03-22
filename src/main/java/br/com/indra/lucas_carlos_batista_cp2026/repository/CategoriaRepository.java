@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
-    List<Categoria> FindByAtivoTrue();
-    Optional<Categoria> FindByIdAndAtivoTrue(Long id);
+    List<Categoria> findByAtivoTrue();
+    Optional<Categoria> findByIdAndAtivoTrue(Long id);
     boolean existsByNomeAndCategoriaPai(String nome, Categoria categoriaPai); // proibe duplicidad no mesmo nivel
+
 }
