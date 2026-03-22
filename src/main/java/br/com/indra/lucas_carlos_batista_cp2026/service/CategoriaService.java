@@ -23,7 +23,7 @@ public class CategoriaService {
                 .orElseThrow(() -> new CategoriaNotFoundException(id));
     }
 
-    public Categoria createdProduto(Categoria categoria) {
+    public Categoria createdCategoria(Categoria categoria) {
         if (categoriaRepository.existsByNomeAndCategoriaPai(categoria.getNome(), categoria.getCategoriaPai())) {
             throw new RuntimeException("Já existe uma categoria cadastrada com esse nome nesse n´vel");
         }
@@ -42,7 +42,7 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new CategoriaNotFoundException(id));
 
-        categoria.setAtivo(false);
+        categoria.setAtivo(false); // delete logico
         categoriaRepository.save(categoria);
     }
 }
