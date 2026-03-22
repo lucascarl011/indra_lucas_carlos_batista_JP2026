@@ -42,7 +42,7 @@ public class ProdutosController {
     @Operation(summary = "Endpoint para atualizar produto", description = "Atualiza todos os dados de um produto")
     @PutMapping("/{id}")
     public ResponseEntity<Produtos> atualiza(@PathVariable Long id, @Valid @RequestBody Produtos produto){
-        return ResponseEntity.ok(produtosService.atualiza(produto));
+        return ResponseEntity.ok(produtosService.atualiza(id, produto));
     }
 
     @Operation(summary = "Endpoint para atualizar preço", description = "Atualiza apenas o preço de um produto")

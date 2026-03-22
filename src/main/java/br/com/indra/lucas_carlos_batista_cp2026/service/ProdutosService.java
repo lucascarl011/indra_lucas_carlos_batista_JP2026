@@ -1,5 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service;
 
+import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.model.HistoricoPreco;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.HistoricoPrecoRepository;
@@ -30,25 +31,31 @@ public class ProdutosService {
         return produtosRepository.save(produto);
     }
 
-    public Produtos atualiza(Produtos produto){
-        return produtosRepository.save(produto);
+    public Produtos atualiza(Long id, Produtos produto) {
+        Produtos produtoExistente = produtosRepository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new ProdutoNotFoundException(id));
+
+        produtoExistente.setNome(produto.getNome());
+        produtoExistente.setDescricao(produto.getDescricao());
+        produtoExistente.setPreco(produto.getPreco());
+        produtoExistente.setCodigoBarras(produto.getCodigoBarras());
+
+        return produtosRepository.save(produtoExistente);
     }
 
-    // delete logicoo
-    public void deletaProduto(Long id){
+    public void deletaProduto(Long id) {
         Produtos produto = produtosRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                .orElseThrow(() -> new ProdutoNotFoundException(id));
 
         produto.setAtivo(false);
         produtosRepository.save(produto);
     }
 
     public Produtos atualizaPreco(Long id, BigDecimal preco) {
+        Produtos produto = produtosRepository.findById(id)
+                .orElseThrow(() -> new ProdutoNotFoundException(id));
 
-        final var produto = produtosRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-
-        final var historico = new HistoricoPreco();
+        HistoricoPreco historico = new HistoricoPreco();
         historico.setPrecoAntigo(produto.getPreco());
         historico.setProdutos(produto);
         historico.setPrecoNovo(preco);
