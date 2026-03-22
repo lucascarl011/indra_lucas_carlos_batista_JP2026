@@ -1,8 +1,11 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service;
 
+import br.com.indra.lucas_carlos_batista_cp2026.exception.CategoriaNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundException;
+import br.com.indra.lucas_carlos_batista_cp2026.model.Categoria;
 import br.com.indra.lucas_carlos_batista_cp2026.model.HistoricoPreco;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
+import br.com.indra.lucas_carlos_batista_cp2026.repository.CategoriaRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.HistoricoPrecoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ public class ProdutosService {
 
     private final ProdutosRepository produtosRepository;
     private final HistoricoPrecoRepository historicoPrecoRepository;
+    private final CategoriaRepository categoriaRepository;
 
     public List<Produtos> getAll(){
         return produtosRepository.findByAtivoTrue(); // so produtos ativos
@@ -28,6 +32,11 @@ public class ProdutosService {
     }
 
     public Produtos createdProduto(Produtos produto) {
+        if (produto.getCategoria() != null && produto.getCategoria().getId() != null) {
+            Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
+                    .orElseThrow(() -> new CategoriaNotFoundException(produto.getCategoria().getId()));
+            produto.setCategoria(categoria);
+        }
         return produtosRepository.save(produto);
     }
 
