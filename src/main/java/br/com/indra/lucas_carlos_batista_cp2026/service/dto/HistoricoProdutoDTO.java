@@ -1,7 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

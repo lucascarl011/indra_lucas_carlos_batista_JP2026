@@ -40,20 +40,20 @@ public class ProdutosController {
     }
 
     @Operation(summary = "Endpoint para atualizar produto", description = "Atualiza todos os dados de um produto")
-    @PutMapping("/{id}")
+    @PutMapping("/produtos/{id}")
     public ResponseEntity<Produtos> atualiza(@PathVariable Long id, @Valid @RequestBody Produtos produto){
         return ResponseEntity.ok(produtosService.atualiza(id, produto));
     }
 
     @Operation(summary = "Endpoint para atualizar preço", description = "Atualiza apenas o preço de um produto")
-    @PatchMapping("/{id}/preco")
+    @PatchMapping("/produtos/{id}/preco")
     public ResponseEntity<Produtos> atualizarProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
         return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
     }
 
     // Delete lógico implementado na Classe Produtos e ProdutosService
     @Operation(summary = "Endpoint para deletar produto", description = "Remove um produto pelo seu id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/produtos/{id}")
     public ResponseEntity<Void> deletaProduto(@PathVariable Long id){
         produtosService.deletaProduto(id);
         return ResponseEntity.noContent().build();
