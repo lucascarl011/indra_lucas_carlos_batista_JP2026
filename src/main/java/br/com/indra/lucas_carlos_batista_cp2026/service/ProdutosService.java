@@ -18,7 +18,12 @@ public class ProdutosService {
     private final HistoricoPrecoRepository historicoPrecoRepository;
 
     public List<Produtos> getAll(){
-        return produtosRepository.findAll();
+        return produtosRepository.findByAtivoTrue(); // so produtos ativos
+    }
+
+    public Produtos getById(Long id){
+        return produtosRepository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado ou inativo"));
     }
 
     public Produtos createdProduto(Produtos produto) {
@@ -29,13 +34,13 @@ public class ProdutosService {
         return produtosRepository.save(produto);
     }
 
+    // delete logicoo
     public void deletaProduto(Long id){
-        produtosRepository.deleteById(id);
-    }
-
-    public Produtos getById(Long id){
-        return produtosRepository.findById(id)
+        Produtos produto = produtosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        produto.setAtivo(false);
+        produtosRepository.save(produto);
     }
 
     public Produtos atualizaPreco(Long id, BigDecimal preco) {

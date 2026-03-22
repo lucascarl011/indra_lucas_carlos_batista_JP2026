@@ -21,40 +21,39 @@ public class ProdutosController {
     private final ProdutosService produtosService;
 
     @Operation(description = "Endpoint para criar novo produto", summary = "Criação de produto")
-
-    // Esse metodo cria um novo produto
     @PostMapping
     public ResponseEntity<Produtos> criarProduto(@Valid @RequestBody Produtos produto){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(produtosService.createdProduto(produto));
     }
 
-    // Esse metodo lista todos os produtos criados
+    @Operation(description = "Endpoint para listar produtos", summary = "Retorna todos produtos")
     @GetMapping
     public ResponseEntity<List<Produtos>> getAll(){
         return ResponseEntity.ok(produtosService.getAll());
     }
 
-    // Esse metodo lista um produto especifico pelo id
+    @Operation(description = "Endpoint para listar produto por id", summary = "Retorna um produto")
     @GetMapping("/{id}")
     public ResponseEntity<Produtos> getById(@PathVariable Long id){
         return ResponseEntity.ok(produtosService.getById(id));
     }
 
-    // Esse metodo atualiza o produto
+    @Operation(summary = "Endpoint para atualizar produto", description = "Atualiza todos os dados de um produto")
     @PutMapping("/{id}")
     public ResponseEntity<Produtos> atualiza(@PathVariable Long id, @Valid @RequestBody Produtos produto){
         return ResponseEntity.ok(produtosService.atualiza(produto));
     }
 
-    // Esse metodo atualiza o produto parcialmente
+    @Operation(summary = "Endpoint para atualizar preço", description = "Atualiza apenas o preço de um produto")
     @PatchMapping("/{id}/preco")
     public ResponseEntity<Produtos> atualizarProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
         return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
     }
 
-    // Mudar para Delete lógico
-    @DeleteMapping("/deleta/{id}")
+    // Delete lógico implementado na Classe Produtos e ProdutosService
+    @Operation(summary = "Endpoint para deletar produto", description = "Remove um produto pelo seu id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletaProduto(@PathVariable Long id){
         produtosService.deletaProduto(id);
         return ResponseEntity.noContent().build();
