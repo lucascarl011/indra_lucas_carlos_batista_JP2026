@@ -44,11 +44,16 @@ public class ProdutosController {
         return ResponseEntity.ok(produtosService.atualiza(produto));
     }
 
+    // Esse metodo atualiza o produto parcialmente
     @PatchMapping("/atualiza-preco/{id}")
     public ResponseEntity<Produtos> atualizaProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
         return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
     }
 
-
-    // Criar @PostMapping, @Pute @Delete
+    // Esse metodo deleta um determinado produto por id
+    @DeleteMapping("/deleta/{id}")
+    public ResponseEntity<Void> deletaProduto(@PathVariable Long id){
+        produtosService.deletarProduto(id);
+        return ResponseEntity.noContent().build();
+    }
 }
