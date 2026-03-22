@@ -4,7 +4,9 @@ import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.service.ProdutosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,10 @@ public class ProdutosController {
     @Operation(description = "Endpoint para criar novo produto", summary = "Criação de produto")
 
     // Esse metodo cria um novo produto
-    @PostMapping("/cria")
-    public ResponseEntity<Produtos> criarProduto(@RequestBody Produtos produto){
-        return ResponseEntity.ok(produtosService.createdProduto(produto));
+    @PostMapping
+    public ResponseEntity<Produtos> criarProduto(@Valid @RequestBody Produtos produto){
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(produtosService.createdProduto(produto));
     }
 
     // Esse metodo lista todos os produtos criados
@@ -39,18 +42,18 @@ public class ProdutosController {
     }
 
     // Esse metodo atualiza o produto
-    @PutMapping("/atualiza")
-    public ResponseEntity<Produtos> atualiza(@RequestParam Long id, @RequestBody Produtos produto){
+    @PutMapping("/{id}")
+    public ResponseEntity<Produtos> atualiza(@PathVariable Long id, @Valid @RequestBody Produtos produto){
         return ResponseEntity.ok(produtosService.atualiza(produto));
     }
 
     // Esse metodo atualiza o produto parcialmente
-    @PatchMapping("/atualiza-preco/{id}")
+    @PatchMapping("/{id}/preco")
     public ResponseEntity<Produtos> atualizarProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
         return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
     }
 
-    // Esse metodo deleta um determinado produto por id
+    // Mudar para Delete lógico
     @DeleteMapping("/deleta/{id}")
     public ResponseEntity<Void> deletaProduto(@PathVariable Long id){
         produtosService.deletaProduto(id);

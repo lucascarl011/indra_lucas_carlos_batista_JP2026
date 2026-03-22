@@ -26,5 +26,7 @@ public class Produtos {
     @Column(name = "codigo_barras")
     private String codigoBarras;
 
-
+    //para fazer o delete logico
+    @Column(name = "ativo")
+    private Boolean ativo = true;
 }
