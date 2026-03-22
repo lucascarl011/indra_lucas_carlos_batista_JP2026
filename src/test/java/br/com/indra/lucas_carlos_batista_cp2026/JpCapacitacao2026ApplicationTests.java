@@ -1,4 +1,4 @@
-package br.com.indra.jp_capacitacao_2026;
+package br.com.indra.lucas_carlos_batista_cp2026;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

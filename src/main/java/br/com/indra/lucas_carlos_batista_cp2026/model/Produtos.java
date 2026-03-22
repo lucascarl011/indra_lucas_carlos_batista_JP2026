@@ -1,4 +1,4 @@
-package br.com.indra.jp_capacitacao_2026.model;
+package br.com.indra.lucas_carlos_batista_cp2026.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
