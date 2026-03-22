@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -37,12 +38,16 @@ public class ProdutosController {
         return ResponseEntity.ok(produtosService.getById(id));
     }
 
+    // Esse metodo atualiza o produto
     @PutMapping("/atualiza")
     public ResponseEntity<Produtos> atualiza(@RequestParam Long id, @RequestBody Produtos produto){
         return ResponseEntity.ok(produtosService.atualiza(produto));
     }
 
-
+    @PatchMapping("/atualiza-preco/{id}")
+    public ResponseEntity<Produtos> atualizaProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
+        return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
+    }
 
 
     // Criar @PostMapping, @Pute @Delete
