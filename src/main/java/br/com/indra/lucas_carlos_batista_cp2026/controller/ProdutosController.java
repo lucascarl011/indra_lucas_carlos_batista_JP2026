@@ -22,8 +22,8 @@ public class ProdutosController {
 
     // Esse metodo cria um novo produto
     @PostMapping("/cria")
-    public ResponseEntity<Produtos> cria(@RequestBody Produtos produto) {
-        return ResponseEntity.ok(ProdutosService.createdProduto(produto));
+    public ResponseEntity<Produtos> criarProduto(@RequestBody Produtos produto){
+        return ResponseEntity.ok(produtosService.createdProduto(produto));
     }
 
     // Esse metodo lista todos os produtos criados
@@ -46,14 +46,14 @@ public class ProdutosController {
 
     // Esse metodo atualiza o produto parcialmente
     @PatchMapping("/atualiza-preco/{id}")
-    public ResponseEntity<Produtos> atualizaProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
+    public ResponseEntity<Produtos> atualizarProdutoParcial(@PathVariable Long id, @RequestParam BigDecimal preco){
         return ResponseEntity.ok(produtosService.atualizaPreco(id, preco));
     }
 
     // Esse metodo deleta um determinado produto por id
     @DeleteMapping("/deleta/{id}")
     public ResponseEntity<Void> deletaProduto(@PathVariable Long id){
-        produtosService.deletarProduto(id);
+        produtosService.deletaProduto(id);
         return ResponseEntity.noContent().build();
     }
 }

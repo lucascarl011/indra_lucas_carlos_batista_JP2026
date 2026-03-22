@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface HistoricoPrecoRepository extends JpaRepository<HistoricoPreco, UUID> {
 
-    Set<HistoricoPreco> findByProdutosID(Long produtoid);
+    Set<HistoricoPreco> findByProdutosId(Long produtoid);
 }
