@@ -1,12 +1,10 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service;
 
-import br.com.indra.lucas_carlos_batista_cp2026.model.HistoricoPreco;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
