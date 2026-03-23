@@ -12,6 +12,9 @@ import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CarrinhoService {
@@ -72,6 +75,17 @@ public class CarrinhoService {
 
         recalcularTotal(carrinho);
         return carrinhoRepository.save(carrinho);
+    }
+
+    private void recalcularTotal(Carrinho carrinho) {
+        List<ItemCarrinho> itensAtivos = itemCarrinhoRepository
+                .findByCarrinhoIdAndAtivoTrue(carrinho.getId());
+
+        BigDecimal total = itensAtivos.stream()
+                .map(i -> i.getPrecoRegistrado().multiply(BigDecimal.valueOf(i.getQuantidade())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        carrinho.setTotal(total);
     }
 
 
