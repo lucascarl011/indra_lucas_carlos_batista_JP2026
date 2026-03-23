@@ -25,7 +25,7 @@ public class HistoricoPreco {
     @Column(name = "id", columnDefinition = "VARCHAR(36)")
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "produtos_id")
     private Produtos produtos;
     @Column(name = "preco_antigo")
