@@ -1,6 +1,9 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service;
 
+import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Carrinho;
+import br.com.indra.lucas_carlos_batista_cp2026.model.ItemCarrinho;
+import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.CarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ItemCarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
@@ -22,6 +25,23 @@ public class CarrinhoService {
                     novo.setUsuarioId(usuarioId);
                     return carrinhoRepository.save(novo);
                 });
+    }
+
+    public Carrinho adicionarItem(Long usuarioId, Long produtoId, Integer quantidade) {
+        Carrinho carrinho = getCarrinho(usuarioId);
+
+        Produtos produto = produtosRepository.findByIdAndAtivoTrue(produtoId)
+                .orElseThrow(() -> new ProdutoNotFoundException(produtoId));
+
+        ItemCarrinho item = new ItemCarrinho();
+        item.setCarrinho(carrinho);
+        item.setProduto(produto);
+        item.setQuantidade(quantidade);
+        item.setPrecoRegistrado(produto.getPreco());
+        itemCarrinhoRepository.save(item);
+
+        recalcularTotal(carrinho);
+        return carrinhoRepository.save(carrinho);
     }
 
 }
