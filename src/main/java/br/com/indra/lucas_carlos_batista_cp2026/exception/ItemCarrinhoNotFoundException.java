@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class CarrinhoNotFoundException extends RuntimeException {
-    public CarrinhoNotFoundException(Long usuarioId) {
-        super("Carrinho não encontrado para o usuário " + usuarioId);
+public class ItemCarrinhoNotFoundException extends RuntimeException {
+    public ItemCarrinhoNotFoundException(Long id) {
+        super("Item com id " + id + " não encontrado no carrinho");
     }
 }
