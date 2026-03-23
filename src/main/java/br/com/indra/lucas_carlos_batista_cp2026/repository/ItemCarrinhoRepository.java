@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface ItemCarrinhoRepository extends JpaRepository<ItemCarrinho, Long> {
 
-    Optional<ItemCarrinho> findByCarrinhoAndAtivoTrue(Long carrinhoId);
+    Optional<ItemCarrinho> findByIdAndAtivoTrue(Long carrinhoId);
     List<ItemCarrinho> findByCarrinhoIdAndAtivoTrue(Long carrinhoId);
 }

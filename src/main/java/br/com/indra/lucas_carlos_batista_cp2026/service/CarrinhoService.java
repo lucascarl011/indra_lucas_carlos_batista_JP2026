@@ -1,5 +1,7 @@
 package br.com.indra.lucas_carlos_batista_cp2026.service;
 
+import br.com.indra.lucas_carlos_batista_cp2026.exception.CarrinhoNotFoundException;
+import br.com.indra.lucas_carlos_batista_cp2026.exception.ItemCarrinhoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Carrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.ItemCarrinho;
@@ -43,5 +45,20 @@ public class CarrinhoService {
         recalcularTotal(carrinho);
         return carrinhoRepository.save(carrinho);
     }
+
+    public Carrinho atualizarItem(Long usuarioId, Long itemId, Integer quantidade) {
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
+                .orElseThrow(() -> new CarrinhoNotFoundException(usuarioId));
+
+        ItemCarrinho item = itemCarrinhoRepository.findByIdAndAtivoTrue(itemId)
+                .orElseThrow(() -> new ItemCarrinhoNotFoundException(itemId));
+
+        item.setQuantidade(quantidade);
+        itemCarrinhoRepository.save(item);
+
+        recalcularTotal(carrinho);
+        return carrinhoRepository.save(carrinho);
+    }
+
 
 }
