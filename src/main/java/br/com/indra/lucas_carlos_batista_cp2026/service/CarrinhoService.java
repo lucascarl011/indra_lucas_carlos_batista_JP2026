@@ -60,5 +60,19 @@ public class CarrinhoService {
         return carrinhoRepository.save(carrinho);
     }
 
+    public Carrinho removerItem(Long usuarioId, Long itemId) {
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
+                .orElseThrow(() -> new CarrinhoNotFoundException(usuarioId));
+
+        ItemCarrinho item = itemCarrinhoRepository.findByIdAndAtivoTrue(itemId)
+                .orElseThrow(() -> new ItemCarrinhoNotFoundException(itemId));
+
+        item.setAtivo(false);
+        itemCarrinhoRepository.save(item);
+
+        recalcularTotal(carrinho);
+        return carrinhoRepository.save(carrinho);
+    }
+
 
 }
