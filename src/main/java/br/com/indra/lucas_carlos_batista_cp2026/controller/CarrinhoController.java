@@ -31,5 +31,21 @@ public class CarrinhoController {
                 .body(carrinhoService.adicionarItem(usuarioId, produtoId, quantidade));
     }
 
+    @Operation(description = "Endpoint que atualiza quantidade do item", summary = "Atualizar quantidade do item")
+    @PutMapping("/itens/{itemId}")
+    public ResponseEntity<Carrinho> atualizarItem(
+            @PathVariable Long itemId,
+            @RequestParam Long usuarioId,
+            @RequestParam Integer quantidade) {
+        return ResponseEntity.ok(carrinhoService.atualizarItem(usuarioId, itemId, quantidade));
+    }
+
+    @Operation(description = "Endpoint que remove itens do carrinho", summary = "Remover item do carrinho")
+    @DeleteMapping("/itens/{itemId}")
+    public ResponseEntity<Carrinho> removerItem(
+            @PathVariable Long itemId,
+            @RequestParam Long usuarioId) {
+        return ResponseEntity.ok(carrinhoService.removerItem(usuarioId, itemId));
+    }
 
 }
