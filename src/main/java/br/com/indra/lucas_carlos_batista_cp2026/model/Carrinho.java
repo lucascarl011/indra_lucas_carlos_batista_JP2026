@@ -1,5 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Carrinho {
     private BigDecimal total = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "carrinho", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<ItemCarrinho> itens = new ArrayList<>();
 
     @Column(name = "ativo")
