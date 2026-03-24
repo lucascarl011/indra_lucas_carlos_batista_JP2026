@@ -1,5 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class ItemCarrinho {
 
     @ManyToOne
     @JoinColumn(name = "carrinho_id", nullable = false)
+    @JsonBackReference
     private Carrinho carrinho;
 
     @ManyToOne
