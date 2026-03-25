@@ -84,7 +84,8 @@ http://localhost:8080/swagger-ui.html
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/jp-capacitacao-2026
+git clone https://github.com/lucascarl011/indra_lucas_carlos_batista_JP2026
+
 
 # Configure o banco de dados no application.properties
 
