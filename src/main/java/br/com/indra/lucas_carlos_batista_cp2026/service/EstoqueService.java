@@ -87,6 +87,7 @@ public class EstoqueService {
         estoque.setProduto(produto);
         estoque.setQuantidade(0);
         estoque.setQuantidadeMinima(5);
+        verificarEstoqueBaixo(estoque);
         return estoqueRepository.save(estoque);
     }
 
