@@ -3,6 +3,7 @@ package br.com.indra.lucas_carlos_batista_cp2026.controller;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Carrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.service.CarrinhoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/carrinho")
+@Tag(name = "Carrinho", description = "Operações relacionadas ao carrinho de compras")
 public class CarrinhoController {
 
     private final CarrinhoService carrinhoService;

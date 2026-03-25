@@ -4,6 +4,7 @@ import br.com.indra.lucas_carlos_batista_cp2026.model.Estoque;
 import br.com.indra.lucas_carlos_batista_cp2026.model.InventarioTransacao;
 import br.com.indra.lucas_carlos_batista_cp2026.service.EstoqueService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/inventario")
+@Tag(name = "Estoque", description = "Operações relacionadas ao controle de estoque")
 public class EstoqueController {
 
     private final EstoqueService estoqueService;

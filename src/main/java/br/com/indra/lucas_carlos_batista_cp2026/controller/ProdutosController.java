@@ -3,6 +3,7 @@ package br.com.indra.lucas_carlos_batista_cp2026.controller;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.service.ProdutosService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/produtos")
+@Tag(name = "Produtos", description = "Operações relacionadas ao gerenciamento de produtos")
 public class ProdutosController {
 
     private final ProdutosService produtosService;

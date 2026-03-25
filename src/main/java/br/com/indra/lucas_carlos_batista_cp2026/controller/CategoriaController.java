@@ -4,6 +4,7 @@ import br.com.indra.lucas_carlos_batista_cp2026.model.Categoria;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.CategoriaRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categorias")
+@Tag(name = "Categoria", description = "Operações relacionadas às categorias de produtos")
 public class CategoriaController {
 
     private final CategoriaRepository categoriaRepository;
