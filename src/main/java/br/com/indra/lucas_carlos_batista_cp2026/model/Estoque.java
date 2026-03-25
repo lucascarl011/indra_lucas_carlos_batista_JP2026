@@ -30,5 +30,4 @@ public class Estoque {
 
     @Column(name = "estoque_baixo")
     private Boolean estoqueBaixo = false;
-
 }
