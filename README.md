@@ -21,7 +21,7 @@ Cada funcionalidade foi desenvolvida em uma branch separada, seguindo boas prát
 
 ## 📊 Diagrama de Entidades
 
-![Diagrama ER](./JP2026_DIAGRAMA_DE_CLASSES.png)
+![Diagrama ER](./diagramaDeClasses.png)
 
 ---
 
