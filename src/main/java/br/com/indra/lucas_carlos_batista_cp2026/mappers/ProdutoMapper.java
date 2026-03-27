@@ -3,7 +3,9 @@ package br.com.indra.lucas_carlos_batista_cp2026.mappers;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.service.dto.request.ProdutoRequest;
 import br.com.indra.lucas_carlos_batista_cp2026.service.dto.response.ProdutoResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProdutoMapper {
 
     public ProdutoResponse toResponse(Produtos produto) {
