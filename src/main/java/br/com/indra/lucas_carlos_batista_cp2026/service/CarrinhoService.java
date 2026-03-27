@@ -3,12 +3,14 @@ package br.com.indra.lucas_carlos_batista_cp2026.service;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.CarrinhoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.ItemCarrinhoNotFoundException;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundException;
+import br.com.indra.lucas_carlos_batista_cp2026.mappers.CarrinhoMapper;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Carrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.ItemCarrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.CarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ItemCarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
+import br.com.indra.lucas_carlos_batista_cp2026.service.dto.response.CarrinhoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +21,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarrinhoService {
 
+
     private final CarrinhoRepository carrinhoRepository;
     private final ItemCarrinhoRepository itemCarrinhoRepository;
     private final ProdutosRepository produtosRepository;
+    private final CarrinhoMapper carrinhoMapper;
 
-    public Carrinho getCarrinho(Long usuarioId) {
-        return carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
+    public CarrinhoResponse getCarrinho(Long usuarioId) {
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
                 .orElseGet(() -> {
                     Carrinho novo = new Carrinho();
                     novo.setUsuarioId(usuarioId);
                     return carrinhoRepository.save(novo);
                 });
+        return carrinhoMapper.toResponse(carrinho);
     }
 
-    public Carrinho adicionarItem(Long usuarioId, Long produtoId, Integer quantidade) {
-        Carrinho carrinho = getCarrinho(usuarioId);
+    public CarrinhoResponse adicionarItem(Long usuarioId, Long produtoId, Integer quantidade) {
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
+                .orElseGet(() -> {
+                    Carrinho novo = new Carrinho();
+                    novo.setUsuarioId(usuarioId);
+                    return carrinhoRepository.save(novo);
+                });
 
         Produtos produto = produtosRepository.findByIdAndAtivoTrue(produtoId)
                 .orElseThrow(() -> new ProdutoNotFoundException(produtoId));
@@ -46,10 +56,10 @@ public class CarrinhoService {
         itemCarrinhoRepository.save(item);
 
         recalcularTotal(carrinho);
-        return carrinhoRepository.save(carrinho);
+        return carrinhoMapper.toResponse(carrinhoRepository.save(carrinho));
     }
 
-    public Carrinho atualizarItem(Long usuarioId, Long itemId, Integer quantidade) {
+    public CarrinhoResponse atualizarItem(Long usuarioId, Long itemId, Integer quantidade) {
         Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
                 .orElseThrow(() -> new CarrinhoNotFoundException(usuarioId));
 
@@ -60,10 +70,10 @@ public class CarrinhoService {
         itemCarrinhoRepository.save(item);
 
         recalcularTotal(carrinho);
-        return carrinhoRepository.save(carrinho);
+        return carrinhoMapper.toResponse(carrinhoRepository.save(carrinho));
     }
 
-    public Carrinho removerItem(Long usuarioId, Long itemId) {
+    public CarrinhoResponse removerItem(Long usuarioId, Long itemId) {
         Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
                 .orElseThrow(() -> new CarrinhoNotFoundException(usuarioId));
 
@@ -74,7 +84,7 @@ public class CarrinhoService {
         itemCarrinhoRepository.save(item);
 
         recalcularTotal(carrinho);
-        return carrinhoRepository.save(carrinho);
+        return carrinhoMapper.toResponse(carrinhoRepository.save(carrinho));
     }
 
     private void recalcularTotal(Carrinho carrinho) {

@@ -3,6 +3,8 @@ package br.com.indra.lucas_carlos_batista_cp2026.controller;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Estoque;
 import br.com.indra.lucas_carlos_batista_cp2026.model.InventarioTransacao;
 import br.com.indra.lucas_carlos_batista_cp2026.service.EstoqueService;
+import br.com.indra.lucas_carlos_batista_cp2026.service.dto.response.EstoqueResponse;
+import br.com.indra.lucas_carlos_batista_cp2026.service.dto.response.InventarioTransacaoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,13 @@ public class EstoqueController {
 
     @Operation(summary = "Consultar estoque do produto")
     @GetMapping("/{produtoId}")
-    public ResponseEntity<Estoque> getEstoque(@PathVariable Long produtoId) {
+    public ResponseEntity<EstoqueResponse> getEstoque(@PathVariable Long produtoId) {
         return ResponseEntity.ok(estoqueService.getEstoque(produtoId));
     }
 
     @Operation(summary = "Adicionar quantidade ao estoque")
     @PostMapping("/{produtoId}/adicionar")
-    public ResponseEntity<Estoque> adicionar(
+    public ResponseEntity<EstoqueResponse> adicionar(
             @PathVariable Long produtoId,
             @RequestParam Integer quantidade,
             @RequestParam(required = false) String motivo) {
@@ -36,7 +38,7 @@ public class EstoqueController {
 
     @Operation(summary = "Remover quantidade do estoque")
     @PostMapping("/{produtoId}/remover")
-    public ResponseEntity<Estoque> remover(
+    public ResponseEntity<EstoqueResponse> remover(
             @PathVariable Long produtoId,
             @RequestParam Integer quantidade,
             @RequestParam(required = false) String motivo) {
@@ -45,7 +47,7 @@ public class EstoqueController {
 
     @Operation(summary = "Ajuste manual do estoque")
     @PostMapping("/{produtoId}/ajustar")
-    public ResponseEntity<Estoque> ajustar(
+    public ResponseEntity<EstoqueResponse> ajustar(
             @PathVariable Long produtoId,
             @RequestParam Integer quantidade,
             @RequestParam(required = false) String motivo) {
@@ -54,7 +56,7 @@ public class EstoqueController {
 
     @Operation(summary = "Registrar devolução ao estoque")
     @PostMapping("/{produtoId}/devolver")
-    public ResponseEntity<Estoque> devolver(
+    public ResponseEntity<EstoqueResponse> devolver(
             @PathVariable Long produtoId,
             @RequestParam Integer quantidade,
             @RequestParam(required = false) String motivo) {
@@ -63,7 +65,8 @@ public class EstoqueController {
 
     @Operation(summary = "Histórico de transações do produto")
     @GetMapping("/{produtoId}/historico")
-    public ResponseEntity<List<InventarioTransacao>> getHistorico(@PathVariable Long produtoId) {
+    public ResponseEntity<List<InventarioTransacaoResponse>> getHistorico(
+            @PathVariable Long produtoId) {
         return ResponseEntity.ok(estoqueService.getHistorico(produtoId));
     }
 }
