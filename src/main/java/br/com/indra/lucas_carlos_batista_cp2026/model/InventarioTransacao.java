@@ -1,5 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.model;
 
+import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.TipoTransacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

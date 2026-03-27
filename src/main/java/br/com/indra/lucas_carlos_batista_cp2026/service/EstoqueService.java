@@ -5,7 +5,7 @@ import br.com.indra.lucas_carlos_batista_cp2026.exception.ProdutoNotFoundExcepti
 import br.com.indra.lucas_carlos_batista_cp2026.model.Estoque;
 import br.com.indra.lucas_carlos_batista_cp2026.model.InventarioTransacao;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
-import br.com.indra.lucas_carlos_batista_cp2026.model.TipoTransacao;
+import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.TipoTransacao;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.EstoqueRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.InventarioTransacaoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
