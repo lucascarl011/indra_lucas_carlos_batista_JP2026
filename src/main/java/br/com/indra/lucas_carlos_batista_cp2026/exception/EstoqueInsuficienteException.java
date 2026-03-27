@@ -8,5 +8,6 @@ public class EstoqueInsuficienteException extends RuntimeException {
     public EstoqueInsuficienteException(Long produtoId, Integer quantidadeDisponivel) {
         super("Estoque insuficiente para o produto " + produtoId +
                 ". Disponível: " + quantidadeDisponivel);
+
     }
 }
