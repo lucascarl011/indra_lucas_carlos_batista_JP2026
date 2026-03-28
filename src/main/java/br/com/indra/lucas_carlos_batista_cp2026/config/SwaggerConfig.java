@@ -12,13 +12,16 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info()
-                        .title("API - JP2026")
-                        .version("1.0.0")
-                        .description("Documentação da API de Estoque, Produtos, Carrinho e Categorias")
-                        .contact(new Contact()
-                                .name("Lucas Carlos Batista")
-                                .email("lucassscarlosss54@gmail.com"))
-                );
+                .info(apiInfo());
+    }
+
+    private Info apiInfo() {
+        return new Info()
+                .title("API - JP2026")
+                .version("1.0.0")
+                .description("Documentação da API de Estoque, Produtos, Carrinho, Categorias e Pedidos")
+                .contact(new Contact()
+                        .name("Lucas Carlos Batista")
+                        .email("lucassscarlosss54@gmail.com"));
     }
 }
