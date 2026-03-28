@@ -36,7 +36,7 @@ A aplicação segue o padrão em camadas:
 
 ## 📊 Diagrama de Entidades
 
-<img src="./diagramaClasses.png" alt="Diagrama ER" width="300"/>
+<img src="./diagramaClasses.png" alt="Diagrama ER" width="450"/>
 
 O sistema é baseado em relacionamentos entre Produto, Categoria, Carrinho e Pedido, onde o fluxo principal parte do carrinho até a geração do pedido, impactando diretamente o estoque.
 
