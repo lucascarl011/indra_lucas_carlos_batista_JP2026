@@ -7,6 +7,7 @@ import br.com.indra.lucas_carlos_batista_cp2026.mappers.CarrinhoMapper;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Carrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.ItemCarrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.Produtos;
+import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.StatusCarrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.CarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ItemCarrinhoRepository;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.ProdutosRepository;
@@ -21,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarrinhoService {
 
-
     private final CarrinhoRepository carrinhoRepository;
     private final ItemCarrinhoRepository itemCarrinhoRepository;
     private final ProdutosRepository produtosRepository;
@@ -32,6 +32,7 @@ public class CarrinhoService {
                 .orElseGet(() -> {
                     Carrinho novo = new Carrinho();
                     novo.setUsuarioId(usuarioId);
+                    novo.setStatus(StatusCarrinho.ATIVO);
                     return carrinhoRepository.save(novo);
                 });
         return carrinhoMapper.toResponse(carrinho);
@@ -42,6 +43,7 @@ public class CarrinhoService {
                 .orElseGet(() -> {
                     Carrinho novo = new Carrinho();
                     novo.setUsuarioId(usuarioId);
+                    novo.setStatus(StatusCarrinho.ATIVO);
                     return carrinhoRepository.save(novo);
                 });
 
@@ -84,6 +86,15 @@ public class CarrinhoService {
         itemCarrinhoRepository.save(item);
 
         recalcularTotal(carrinho);
+        return carrinhoMapper.toResponse(carrinhoRepository.save(carrinho));
+    }
+
+    public CarrinhoResponse cancelarCarrinho(Long usuarioId) {
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndAtivoTrue(usuarioId)
+                .orElseThrow(() -> new CarrinhoNotFoundException(usuarioId));
+
+        carrinho.setAtivo(false);
+        carrinho.setStatus(StatusCarrinho.CANCELADO);
         return carrinhoMapper.toResponse(carrinhoRepository.save(carrinho));
     }
 

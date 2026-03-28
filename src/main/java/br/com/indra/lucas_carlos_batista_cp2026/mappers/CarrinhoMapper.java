@@ -23,7 +23,8 @@ public class CarrinhoMapper {
                 carrinho.getUsuarioId(),
                 itens,
                 carrinho.getTotal(),
-                carrinho.getAtivo()
+                carrinho.getAtivo(),
+                carrinho.getStatus()
         );
     }
 

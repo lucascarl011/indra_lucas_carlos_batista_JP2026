@@ -1,5 +1,6 @@
 package br.com.indra.lucas_carlos_batista_cp2026.model;
 
+import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.StatusCarrinho;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,8 @@ public class Carrinho {
 
     @Column(name = "ativo")
     private Boolean ativo  = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusCarrinho status = StatusCarrinho.ATIVO;
 }

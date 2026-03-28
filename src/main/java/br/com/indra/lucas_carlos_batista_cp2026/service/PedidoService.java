@@ -3,6 +3,7 @@ package br.com.indra.lucas_carlos_batista_cp2026.service;
 import br.com.indra.lucas_carlos_batista_cp2026.exception.*;
 import br.com.indra.lucas_carlos_batista_cp2026.mappers.PedidoMapper;
 import br.com.indra.lucas_carlos_batista_cp2026.model.*;
+import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.StatusCarrinho;
 import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.StatusPedido;
 import br.com.indra.lucas_carlos_batista_cp2026.model.enuns.TipoTransacao;
 import br.com.indra.lucas_carlos_batista_cp2026.repository.*;
@@ -41,8 +42,8 @@ public class PedidoService {
         pedido.setUsuarioId(request.usuarioId());
         pedido.setEndereco(request.endereco());
         pedido.setFrete(request.frete() != null ? request.frete() : BigDecimal.ZERO);
+        pedido.setDesconto(BigDecimal.ZERO);
         pedido.setStatus(StatusPedido.CRIADO);
-        pedidoRepository.save(pedido);
 
         BigDecimal total = BigDecimal.ZERO;
         for (ItemCarrinho itemCarrinho : itensAtivos) {
@@ -56,6 +57,20 @@ public class PedidoService {
                 throw new EstoqueInsuficienteException(
                         itemCarrinho.getProduto().getId(), estoque.getQuantidade());
             }
+
+            total = total.add(itemCarrinho.getPrecoRegistrado()
+                    .multiply(BigDecimal.valueOf(itemCarrinho.getQuantidade())));
+        }
+
+        pedido.setTotal(total.add(pedido.getFrete()).subtract(pedido.getDesconto()));
+        pedidoRepository.save(pedido);
+
+        for (ItemCarrinho itemCarrinho : itensAtivos) {
+
+            Estoque estoque = estoqueRepository
+                    .findByProdutoId(itemCarrinho.getProduto().getId())
+                    .orElseThrow(() -> new EstoqueInsuficienteException(
+                            itemCarrinho.getProduto().getId(), 0));
 
             ItemPedido itemPedido = new ItemPedido();
             itemPedido.setPedido(pedido);
@@ -74,15 +89,10 @@ public class PedidoService {
             transacao.setQuantidade(itemCarrinho.getQuantidade());
             transacao.setMotivo("Venda - Pedido #" + pedido.getId());
             transacaoRepository.save(transacao);
-
-            total = total.add(itemCarrinho.getPrecoRegistrado()
-                    .multiply(BigDecimal.valueOf(itemCarrinho.getQuantidade())));
         }
 
-        pedido.setTotal(total.add(pedido.getFrete()).subtract(pedido.getDesconto()));
-        pedidoRepository.save(pedido);
-
         carrinho.setAtivo(false);
+        carrinho.setStatus(StatusCarrinho.FINALIZADO);
         carrinhoRepository.save(carrinho);
 
         return pedidoMapper.toResponse(pedidoRepository.findById(pedido.getId()).get());

@@ -51,4 +51,11 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinhoService.removerItem(usuarioId, itemId));
     }
 
+    @Operation(description = "Endpoint para cancelar carrinho do usuario", summary = "Cancelar carrinho")
+    @PostMapping("/cancelar")
+    public ResponseEntity<CarrinhoResponse> cancelarCarrinho(@RequestParam Long usuarioId) {
+        return ResponseEntity.ok(carrinhoService.cancelarCarrinho(usuarioId));
+    }
+
+
 }
