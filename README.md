@@ -27,13 +27,16 @@ A aplicação segue o padrão em camadas:
 - **Controller** → Responsável pelas requisições HTTP
 - **Service** → Contém as regras de negócio
 - **Repository** → Comunicação com o banco de dados
-- **Entity** → Representação das tabelas
-
+- **Model** → Representação das tabelas do banco
+- **Mappers** → Conversão entre entidades e DTOs (Request/Response)
+- **Exception** → Tratamento centralizado de erros da aplicação
+- **Config** → Configurações gerais da aplicação (ex: Swagger, CORS)
+- **DTOs** → Objetos de transferência de dados (Request e Response), localizados dentro de `service/dto`
 ---
 
 ## 📊 Diagrama de Entidades
 
-![Diagrama ER](./diagramaDeClasses.png)
+<img src="./diagramaClasses.png" alt="Diagrama ER" width="690"/>
 
 O sistema é baseado em relacionamentos entre Produto, Categoria, Carrinho e Pedido, onde o fluxo principal parte do carrinho até a geração do pedido, impactando diretamente o estoque.
 
@@ -179,6 +182,12 @@ spring.datasource.password=SUA_SENHA
 # Rode a aplicação
 ./mvnw spring-boot:run
 ```
+
+---
+
+## Banco de Dados Oracle
+
+<img src="./bancoOracle.png" width="300"/>
 
 ---
 
